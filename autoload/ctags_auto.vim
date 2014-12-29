@@ -25,12 +25,16 @@ endfunction
 
 " タグファイルを生成する
 function! ctags_auto#generate()
-    let tags_file_full_path = ctags_auto#get_tags_file_path()
-    if tags_file_full_path == ""
-        finish
+    let project_top_dir = ctags_auto#get_project_root()
+    if project_top_dir == ""
+        " 空文字なら何もしない
+        echo( ".git not found" )
+        return ""
     endif
 
-    let ctags_command = "ctags --append=no -R -f " . tags_file_full_path
+    let tags_file_full_path = project_top_dir . "/tags"
+
+    let ctags_command = "ctags --append=no -f " . tags_file_full_path . " -R " . project_top_dir 
     echo( ctags_command )
     let t = system( ctags_command )
 endfunction
