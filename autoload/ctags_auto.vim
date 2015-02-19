@@ -3,7 +3,6 @@ scriptencoding utf-8
 " .gitのあるディレクトリを取得する
 function! ctags_auto#get_project_root()
     let top = vimproc#system2("git rev-parse --show-toplevel")
-    echo top
     if v:shell_error == 0
         return substitute( top, "\n", "", "g")
     endif
